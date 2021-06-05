@@ -11,4 +11,10 @@ class Logger extends EventEmitter {
     }
 }
 
-module.exports = Logger;
+// module.exports = Logger;
+
+const logger = new Logger()
+
+logger.on('log', data => console.log(data))
+
+logger.log('Hello World!')
