@@ -20,14 +20,18 @@ app.get('/', (req, res) => {
 })
 
 // Connect to DB
-mongoose.connect(
-    process.env.DB_CONNECTION, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }, () => {
-        console.log("Connected to MongoDB Cloud!");
-    }
-);
+try {
+    mongoose.connect(
+        encodeURIComponent(process.env.DB_CONNECTION), {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }, () => {
+            console.log("Connected to MongoDB Cloud!");
+        }
+    );
+} catch (err) {
+    console.log(`Error: ${err}`);
+}
 
 // Starting server
 app.listen(process.env.PORT);
