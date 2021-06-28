@@ -20,18 +20,13 @@ app.get('/', (req, res) => {
 })
 
 // Connect to DB
-try {
-    mongoose.connect(
-        encodeURIComponent(process.env.DB_CONNECTION), {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }, () => {
-            console.log("Connected to MongoDB Cloud!");
-        }
-    );
-} catch (err) {
-    console.log(`Error: ${err}`);
-}
+mongoose.connect(
+    process.env.DB_CONNECTION, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log('Connected to MongoDB Atlas!'))
+    .catch((err) => console.log(`${err}`));
 
 // Starting server
 app.listen(process.env.PORT);
