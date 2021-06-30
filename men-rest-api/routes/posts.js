@@ -14,24 +14,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Create post
-router.post('/', async (req, res) => {
-    console.log(req.body);
-    const post = new Post({
-        title: req.body.title,
-        description: req.body.description
-    });
-
-    try {
-        const savedPost = await post.save();
-        res.status(200).json(savedPost);
-    } catch (err) {
-        res.status(500).json({
-            message: err
-        });
-    }
-});
-
 // Get single post
 router.get('/:id', async (req, res) => {
     try {
@@ -44,13 +26,17 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Delete single post
-router.delete('/:id', async (req, res) => {
+// Create post
+router.post('/', async (req, res) => {
+    console.log(req.body);
+    const post = new Post({
+        title: req.body.title,
+        description: req.body.description
+    });
+
     try {
-        const deleteStatus = await Post.remove({
-            _id: req.params.id
-        });
-        res.status(200).json(deleteStatus);
+        const savedPost = await post.save();
+        res.status(201).json(savedPost);
     } catch (err) {
         res.status(500).json({
             message: err
@@ -69,6 +55,21 @@ router.patch('/:id', async (req, res) => {
             }
         });
         res.status(200).json(updateStatus);
+    } catch (err) {
+        res.status(500).json({
+            message: err
+        });
+    }
+});
+
+
+// Delete single post
+router.delete('/:id', async (req, res) => {
+    try {
+        const deleteStatus = await Post.remove({
+            _id: req.params.id
+        });
+        res.status(200).json(deleteStatus);
     } catch (err) {
         res.status(500).json({
             message: err
